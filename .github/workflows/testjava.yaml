@@ -12,9 +12,9 @@ jobs:
         with:
           token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
     
-      - name: Check Java Version
+      - name: Running the file
         shell: bash
-        run: java Test.java
+        run: vi hello.html
         
         
 
