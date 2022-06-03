@@ -1,4 +1,4 @@
-puclic class Main {
+puclic class Test {
 
         puclic static void main(String[] args) {
             
