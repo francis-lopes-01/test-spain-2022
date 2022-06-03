@@ -1,5 +1,3 @@
-package com.company;
-
 puclic class Main {
 
         puclic static void main(String[] args) {
