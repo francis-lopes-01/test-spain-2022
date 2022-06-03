@@ -14,7 +14,7 @@ jobs:
     
       - name: Running the file
         shell: bash
-        run: java Test.java
+        run: java HelloWorld.java
         
         
 
