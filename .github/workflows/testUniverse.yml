@@ -22,8 +22,7 @@ jobs:
     
       - name: Running the file
         shell: bash
-        env:
-          Path1: /main/workflow/helloUniverse/${{ github.event.inputs.countryCode }}
+        if: ${{ </main/workflow/helloUniverse/${{ github.event.inputs.hello }}> }} == W
         run: java HelloWorld.java
         
       - name: Running the file
