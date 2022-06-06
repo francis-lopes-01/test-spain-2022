@@ -1,6 +1,6 @@
 #Java app for testing
 on:
-  workflow_dispatch :
+  workflow_dispatch:
     inputs:
         hello:
           required: true
@@ -22,22 +22,12 @@ jobs:
     
       - name: Running the file
         shell: bash
-        run: |
-            if [[ "${{ github.event.inputs.hello.options }}" == "W" ]]; then
-                echo "::set-output name=deviceString::Hello World!"
-            fi
-            if [[ "${{ github.event.inputs.hello.options }}" == "U" ]]; then
-                echo "::set-output name=deviceString::Hello Universe!"
-            fi
-            
-        #if: contains(inputs.hello.options, 'W')
-        #run: echo 'Hello World!'
-        #if: ${{ github.event.workflow_dispatch.inputs.hello == 'W' }}
-        #run: java HelloWorld.java
+        if: github.event.workflow_dispatch.inputs.hello.options == 'W'
+        run: java HelloWorld.java
         
       - name: Running the file
         shell: bash
-        if: ${{ github.event.workflow_dispatch.inputs.hello == 'U' }}
+        if: ${{ github.event.workflow_dispatch.inputs.hello.options == 'U' }}
         run: java HelloUniverse.java
         
         
