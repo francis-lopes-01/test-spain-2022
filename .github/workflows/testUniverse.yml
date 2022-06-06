@@ -1,7 +1,14 @@
 #Java app for testing
-name: GitHub Actions Test
+name: Hello Universe Test
 on:
   workflow_dispatch :
+    inputs:
+        helloWorld:
+          required: true
+          description: Method which returns "Hello World!"
+        helloUniverse:
+          required: true
+          description: Method which returns "Hello Universe!"
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -15,5 +22,9 @@ jobs:
       - name: Running the file
         shell: bash
         run: java HelloWorld.java
+        
+      - name: Running the file
+        shell: bash
+        run: java HelloUniverse.java
         
         
