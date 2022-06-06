@@ -3,12 +3,13 @@ name: Hello Universe Test
 on:
   workflow_dispatch :
     inputs:
-        helloWorld:
+        hello:
           required: true
-          description: Method which returns "Hello World!"
-        helloUniverse:
-          required: true
-          description: Method which returns "Hello Universe!"
+          description: Choose country W for "Hello World!" or U for "Hello Universe!"          
+          type: choice
+          options: 
+           - W
+           - Y
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -21,6 +22,8 @@ jobs:
     
       - name: Running the file
         shell: bash
+        env:
+          Path1: /main/workflow/helloUniverse/${{ github.event.inputs.countryCode }}
         run: java HelloWorld.java
         
       - name: Running the file
