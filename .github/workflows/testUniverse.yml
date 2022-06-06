@@ -5,7 +5,7 @@ on:
     inputs:
         hello:
           required: true
-          description: Choose country W for "Hello World!" or U for "Hello Universe!"          
+          description: Choose W for "Hello World!" or U for "Hello Universe!"          
           type: choice
           options: 
            - W
@@ -22,6 +22,7 @@ jobs:
     
       - name: Running the file
         shell: bash
+        if: contains(inputs.hello.options, 'W')
         #if: ${{ github.event.workflow_dispatch.inputs.hello == 'W' }}
         run: java HelloWorld.java
         
