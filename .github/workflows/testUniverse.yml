@@ -1,0 +1,19 @@
+#Java app for testing
+name: GitHub Actions Test
+on:
+  workflow_dispatch :
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout private tools
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
+    
+      - name: Running the file
+        shell: bash
+        run: java HelloWorld.java
+        
+        
