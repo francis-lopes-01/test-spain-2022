@@ -3,13 +3,18 @@ name: Hello Universe Test
 on:
   workflow_dispatch :
     inputs:
-        hello:
-          required: true
-          description: Choose W for "Hello World!" or U for "Hello Universe!"          
-          type: choice
-          options: 
-           - W
-           - Y
+        #hello:
+          #required: true
+         # description: Choose W for "Hello World!" or U for "Hello Universe!"          
+          #type: choice
+          #options: 
+          # - W
+          # - Y
+  
+        device:
+            description: '[W] Hello World!, [U] Hello Universe!'
+            required: true
+            default: 'W'
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -24,10 +29,10 @@ jobs:
         shell: bash
         run: |
             if [[ "${{ github.event.inputs.hello.options }}" == "W" ]]; then
-                echo "::set-output name=deviceString::iPhone"
+                echo "::set-output name=deviceString::Hello World!"
             fi
             if [[ "${{ github.event.inputs.hello.options }}" == "U" ]]; then
-                echo "::set-output name=deviceString::Samsung Galaxy"
+                echo "::set-output name=deviceString::Hello Universe!"
             fi
         #if: contains(inputs.hello.options, 'W')
         #run: echo 'Hello World!'
