@@ -20,14 +20,14 @@ jobs:
         with:
           token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
     
-      - name: Running the file
+      - name: Running the file Hello World
         shell: bash
-        if: ${{ github.event_content == 'W' }}
+        if: ${{ github.event.inputs.hello }} == 'W'
         run: java HelloWorld.java
         
-      - name: Running the file
+      - name: Running the file Hello Universe
         shell: bash
-        if: ${{ github.event.workflow_dispatch.inputs.hello.options }} == 'U'
+        if: ${{ github.event.inputs.hello }} == 'U'
         run: java HelloUniverse.java
         
         
