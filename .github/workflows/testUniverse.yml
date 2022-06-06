@@ -22,12 +22,12 @@ jobs:
     
       - name: Running the file Hello World
         shell: bash
-        if: ${{ github.event.inputs.hello }} == 'W'
+        if: github.event.inputs.hello == 'W'
         run: java HelloWorld.java
         
       - name: Running the file Hello Universe
         shell: bash
-        if: ${{ github.event.inputs.hello }} == 'U'
+        if: github.event.inputs.hello == 'U'
         run: java HelloUniverse.java
         
         
