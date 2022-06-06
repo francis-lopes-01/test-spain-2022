@@ -22,11 +22,12 @@ jobs:
     
       - name: Running the file
         shell: bash
-        if: ${{ </main/workflow/helloUniverse/${{ github.event.inputs.hello }}> }} == W
+        if: github.event.workflow_dispatch.inputs.hello == 'W'
         run: java HelloWorld.java
         
       - name: Running the file
         shell: bash
+        if: github.event.workflow_dispatch.inputs.hello == 'U'
         run: java HelloUniverse.java
         
         
