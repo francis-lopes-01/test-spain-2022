@@ -1,69 +1,43 @@
 #Java app for testing
-name: my pipeline
 on:
-  workflow_dispatch:
-    inputs:  
-      device:
-        description: '[1] iPhone, [2] Samsung Galaxy'
-        required: true
-        default: '1'
+  workflow_dispatch :
+    inputs:
+        hello:
+          required: true
+          description: Choose W for "Hello World!" or U for "Hello Universe!"          
+          type: choice
+          options: 
+           - W
+           - Y
 
 jobs:
-    test:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    
     steps:
-        - name: Set device
-          id: setDevice
-          run: |
-            if [[ "${{ github.event.inputs.device }}" == "1" ]]; then
-                echo "::set-output name=deviceString::iPhone"
+      - name: Checkout private tools
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
+    
+      - name: Running the file
+        shell: bash
+        run: |
+            if [[ "${{ github.event.inputs.hello.options }}" == "W" ]]; then
+                echo "::set-output name=deviceString::Hello World!"
             fi
-            if [[ "${{ github.event.inputs.device }}" == "2" ]]; then
-                echo "::set-output name=deviceString::Samsung Galaxy"
-            finame: Hello Universe Test
+            if [[ "${{ github.event.inputs.hello.options }}" == "U" ]]; then
+                echo "::set-output name=deviceString::Hello Universe!"
+            fi
             
-            
-#on:
-  #workflow_dispatch :
-    #inputs:
-        #hello:
-          #required: true
-         # description: Choose W for "Hello World!" or U for "Hello Universe!"          
-          #type: choice
-          #options: 
-          # - W
-          # - Y
-  
-        #device:
-            #description: '[W] Hello World!, [U] Hello Universe!'
-            #required: true
-            #default: 'W'
-#jobs:
- # Explore-GitHub-Actions:
-    #runs-on: ubuntu-latest
-    
-    #steps:
-     # - name: Checkout private tools
-     #   uses: actions/checkout@v3
-      #  with:
-      #    token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
-    
-     # - name: Running the file
-      #  shell: bash
-      #  run: |
-      #      if [[ "${{ github.event.inputs.hello.options }}" == "W" ]]; then
-      #          echo "::set-output name=deviceString::Hello World!"
-       #     fi
-       #     if [[ "${{ github.event.inputs.hello.options }}" == "U" ]]; then
-       #         echo "::set-output name=deviceString::Hello Universe!"
-       #     fi
         #if: contains(inputs.hello.options, 'W')
         #run: echo 'Hello World!'
         #if: ${{ github.event.workflow_dispatch.inputs.hello == 'W' }}
         #run: java HelloWorld.java
         
-     # - name: Running the file
-     #   shell: bash
-        #if: ${{ github.event.workflow_dispatch.inputs.hello == 'U' }}
-      #  run: java HelloUniverse.java
+      - name: Running the file
+        shell: bash
+        if: ${{ github.event.workflow_dispatch.inputs.hello == 'U' }}
+        run: java HelloUniverse.java
         
         
