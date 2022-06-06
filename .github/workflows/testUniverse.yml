@@ -27,7 +27,7 @@ jobs:
         
       - name: Running the file
         shell: bash
-        if: ${{ github.event.workflow_dispatch.inputs.hello.options == 'U' }}
+        if: ${{ github.event.workflow_dispatch.inputs.hello.options }} == 'U'
         run: java HelloUniverse.java
         
         
