@@ -16,7 +16,7 @@ on:
           options: 
            - W
            - U
-          default: W
+          default: 'W'
 
 jobs:
   Explore-GitHub-Actions:
