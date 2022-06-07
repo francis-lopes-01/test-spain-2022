@@ -1,4 +1,5 @@
 #Java app for testing
+name: Universe vs World Test
 on:
   workflow_dispatch:
     inputs:
