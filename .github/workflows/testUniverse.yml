@@ -13,10 +13,10 @@ on:
           required: true
           description: Choose W for "Hello World!" or U for "Hello Universe!"          
           type: choice
+          default: 'W'
           options: 
            - W
            - U
-          default: 'W'
 
 jobs:
   Explore-GitHub-Actions:
