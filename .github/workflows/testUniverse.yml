@@ -1,19 +1,19 @@
 #Java app for testing
 name: Universe vs World Test
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+#  push:
+#    branches:
+#      - master
+#  pull_request:
+#    branches:
+#      - master
   workflow_dispatch:
     inputs:
         hello:
           required: true
           description: Choose W for "Hello World!" or U for "Hello Universe!"          
           type: choice
-          default: 'W'
+ #         default: 'W'
           options: 
            - W
            - U
