@@ -25,13 +25,13 @@ jobs:
     steps:
     
       - name: Action Test check input
-        id: check inputs
+        id: checkinputs
         run:
           echo "Se ha seleccionado ${{inputs.hello}}"
           
       - uses: santander-group-europe/test-spain-2022-action@master
         name: Action Test
-        id: action_test
+        id: actiontest
         with:
           hello: ${{inputs.hello}} 
 
