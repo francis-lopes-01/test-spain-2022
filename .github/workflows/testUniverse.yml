@@ -1,38 +1,23 @@
-#Java app for testing
 name: Universe vs World Test
-on:
-#  push:
-#    branches:
-#      - master
-#  pull_request:
-#    branches:
-#      - master
+'on':
   workflow_dispatch:
     inputs:
-        hello:
-          required: true
-          description: Choose W for Hello world and U Hello universe        
-          type: choice
- #         default: 'W'
-          options: 
-           - W
-           - U
-
+      hello:
+        required: true
+        description: Choose W for Hello world and U Hello universe
+        type: choice
+        options:
+          - W
+          - U
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-    
     steps:
-    
       - name: Action Test check input
         id: checkinputs
-        run:
-          echo "Se ha seleccionado '${{github.event.inputs.hello}}'"
-          
+        run: 'echo "Se ha seleccionado ''${{github.event.inputs.hello}}''"'
       - uses: santander-group-europe/test-spain-2022-action@master
         name: Action Test
         id: actiontest
         with:
-          hello: "${{github.event.inputs.hello}}"
-
-        
+          hello: '${{github.event.inputs.hello}}'
