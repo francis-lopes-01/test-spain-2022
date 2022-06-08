@@ -23,19 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout private tools
-        uses: actions/checkout@v3
+      - uses: santander-group-europe/test-spain-2022-action@master
+        name: Action Test
+        id: action_test
         with:
-          token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
-    
-      - name: Running the file Hello World
-        shell: bash
-        if: github.event.inputs.hello == 'W'
-        run: java HelloWorld.java
-        
-      - name: Running the file Hello Universe
-        shell: bash
-        if: github.event.inputs.hello == 'U'
-        run: java HelloUniverse.java
-        
+          hello: ${{inputs.hello}}
+
         
