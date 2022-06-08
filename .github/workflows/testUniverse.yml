@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Checkout private tools
-      uses: actions/checkout@v3
-      with:
-       token: ${{secrets.PAT}} # `GH_PAT` is a secret that contains your PAT
+   # - name: Checkout private tools
+    #  uses: actions/checkout@v3
+     # with:
+      # token: ${{secrets.PAT}} # `GH_PAT` is a secret that contains your PAT
     
     - name: Action Test check input
       id: checkinputs
