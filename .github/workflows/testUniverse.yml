@@ -23,10 +23,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    
+      - name: Action Test check input
+        id: check inputs
+        run:
+          echo "Se ha seleccionado ${{inputs.hello}}"
+          
       - uses: santander-group-europe/test-spain-2022-action@master
         name: Action Test
         id: action_test
         with:
-          hello: ${{github.event.inputs.hello}} 
+          hello: ${{inputs.hello}} 
 
         
