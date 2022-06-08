@@ -11,7 +11,7 @@ on:
     inputs:
         hello:
           required: true
-          description: Choose W for "Hello World!" or U for "Hello Universe!"          
+          description: "Choose W for 'Hello World!' or U for 'Hello Universe!'"          
           type: choice
  #         default: 'W'
           options: 
