@@ -31,6 +31,7 @@ jobs:
           
       - uses: santander-group-europe/test-spain-2022-action@master
         name: Action Test
+        shell: bash
         id: actiontest
         with:
           hello: ${{inputs.hello}} 
