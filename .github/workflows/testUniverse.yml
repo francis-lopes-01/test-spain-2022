@@ -33,6 +33,6 @@ jobs:
         name: Action Test
         id: actiontest
         with:
-          hello: ${{inputs.hello}} 
+          hello: "${{inputs.hello}}"
 
         
