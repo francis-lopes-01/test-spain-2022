@@ -1,5 +1,5 @@
 name: GitHub Actions Goodbye
-on: [push]
+'on': [push]
 
 jobs:
   hello_world_job:
