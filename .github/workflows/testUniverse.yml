@@ -22,9 +22,10 @@ jobs:
     - name: Action Test check input
       id: checkinputs
       run: "echo Se ha seleccionado '${{github.events.inputs.hello}}'"
+      
     - uses: santander-group-europe/test-spain-2022-action@master
       name: Action Test        
       id: actiontest
       with:
-          hello: "${{github.events.inputs.hello}}"
-          token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
+        hello: "${{github.events.inputs.hello}}"
+        token: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
