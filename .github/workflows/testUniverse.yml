@@ -27,6 +27,6 @@ jobs:
         name: Action Test
         id: action_test
         with:
-          hello: ${{inputs.hello}}
+          hello: ${{github.event.inputs.hello}} 
 
         
