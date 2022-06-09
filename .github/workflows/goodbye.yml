@@ -13,6 +13,6 @@ jobs:
         with:
           who-to-greet: 'Pablo Picasso'
           #who-to-greet: "${{github.events.inputs.who-to-greet}}"
-          tokenPAT: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
+          #tokenPAT: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
       - run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
