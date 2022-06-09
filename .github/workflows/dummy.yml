@@ -10,7 +10,7 @@ jobs:
     - name: Checkout dummy
       uses: actions/checkout@v3
       with:
-        repository: santander-group-europe/alm-dummy-app-ios@master
+        repository: santander-group-europe/alm-dummy-app-ios
         token: ${{secrets.PAT}} # `PAT` is a secret that contains your PAT
     
     #- name: Action Test check input
