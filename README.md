@@ -8,3 +8,5 @@ Repository for testing purpose
 [![Hello Universe Test](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/testUniverse.yml/badge.svg)](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/testUniverse.yml)
 
 [![GitHub Actions Goodbye](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/goodbye.yml/badge.svg)](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/goodbye.yml)
+
+[![Lint Code Base](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/linter.yml/badge.svg)](https://github.com/santander-group-europe/test-spain-2022/actions/workflows/linter.yml)
