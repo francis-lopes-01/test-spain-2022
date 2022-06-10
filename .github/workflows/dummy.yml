@@ -12,7 +12,7 @@ name: Dummy Test
 
 jobs:
   Checkout_Dummy:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     steps:
     
     - name: Get Token Org Europe
@@ -26,8 +26,9 @@ jobs:
     - name: Checkout dummy repo
       uses: actions/checkout@v3
       with:
-        repository: santander-group-europe/alm-dummy-app-ios@develop
+        repository: santander-group-europe/alm-dummy-app-ios
         submodules: false
+        ref: develop
         token: ${{ steps.generateEuropeToken.outputs.token }}
         #token: ${{secrets.PAT}} # `PAT` is a secret that contains your PAT  
         
