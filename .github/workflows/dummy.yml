@@ -1,29 +1,29 @@
 name: Dummy Test
 'on':
   workflow_dispatch:
-  workflow_call:
-    secrets:
-      token:
-       required: true
-      application_id:
-       required: true
-      application_private_key:
-       required: true
+ # workflow_call
+    #secrets:
+      #token:
+      # required: true
+      #application_id:
+      # required: true
+      #application_private_key:
+      # required: true
 
 jobs:
   Checkout_Dummy:
     runs-on: macos-12
     steps:
     
-    - name: Get Token Org Europe
-      id: generateEuropeToken
-      uses: peter-murray/workflow-application-token-action@v1.3.0
-      with:
-        application_id: ${{ secrets.application_id }}
-        application_private_key: ${{ secrets.application_private_key }}
-        organization: santander-group-europe
+   # - name: Get Token Org Europe
+    #  id: generateEuropeToken
+    #  uses: peter-murray/workflow-application-token-action@v1.3.0
+    #  with:
+     #   application_id: ${{ secrets.application_id }}
+     #   application_private_key: ${{ secrets.application_private_key }}
+     #   organization: santander-group-europe
     
-    - name: Checkout dummy
+    - name: Checkout dummy repo
       uses: actions/checkout@v3
       with:
         repository: santander-group-europe/alm-dummy-app-ios@develop
