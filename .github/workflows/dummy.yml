@@ -5,6 +5,8 @@ name: Dummy Test
     secrets:
       token:
        required: true
+      application_id:
+       required: true
       application_private_key:
        required: true
 
@@ -13,30 +15,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
+    - name: Get Token Org Europe
+      id: generateEuropeToken
+      uses: peter-murray/workflow-application-token-action@v1.3.0
+      with:
+        application_id: ${{ secrets.application_id }}
+        application_private_key: ${{ secrets.application_private_key }}
+        organization: santander-group-europe
+    
     - name: Checkout dummy
       uses: actions/checkout@v3
       with:
         repository: santander-group-europe/alm-dummy-app-ios@develop
+        submodules: false
+        ref: develop
+        token: ${{ steps.generateEuropeToken.outputs.token }}
         #token: ${{secrets.PAT}} # `PAT` is a secret that contains your PAT  
         
-  # Running Unit test using MAC-OS 12   
-  Execute_Unit_Tests:
-    runs-on: macos-12
-    outputs:
-      version: ${{steps.setOutputStep.outputs.version}}
-    steps:
-      - name: Get Token Org Europe
-        id: generateEuropeToken
-        uses: peter-murray/workflow-application-token-action@v1.3.0
-        with:
-          application_id: ${{ secrets.application_id }}
-          application_private_key: ${{ secrets.application_private_key }}
-          organization: santander-group-europe
-          
-      - uses: actions/checkout@v3
-        name: Checkout application repository
-        with:
-          repository: ${{ santander-group-europe/alm-dummy-app-ios@develop }}
-          submodules: false
-          ref: develop
-          token: ${{ steps.generateEuropeToken.outputs.token }}
+ 
