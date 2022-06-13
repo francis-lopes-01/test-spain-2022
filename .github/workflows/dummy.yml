@@ -97,14 +97,14 @@ jobs:
 #        path: sonar-reports/swiftlint.txt
 #        retention-days: 1
 #          
-    - name: Get version
-      shell: bash
-      env:
-        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
-        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+#    - name: Get version
+#      shell: bash
+#      env:
+#        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
+#        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
 
-      run: |
-        bundle exec fastlane alm_common_version_ios
+#      run: |
+ #       bundle exec fastlane alm_common_version_ios
            
     - name: Set output
       id: setOutputStep
