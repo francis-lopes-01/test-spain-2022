@@ -1,14 +1,16 @@
 name: Dummy Test
 'on':
   workflow_dispatch:
-  #workflow_call:
-  #  secrets:
-  #    token:
-  #     required: true
-  #    application_id:
-  #     required: true
-  #    application_private_key:
-  #     required: true
+  workflow_call:
+     secrets:
+      token:
+       required: true
+      application_id:
+       required: true
+      application_private_key:
+       required: true
+      sonar_token_dummy_ios:
+       required: true
 
 # Running Unit test using MAC-OS 12 
 jobs:
@@ -71,14 +73,92 @@ jobs:
         FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
         FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
         FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
-        #FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
-          
+        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+        
+        run: |
+          pod install
+          bundle exec fastlane alm_common_sonarq_ios
+          cd sonar-reports
+            
+    - name: Rename coverage file
       run: |
-        pod install
-     #   bundle exec fastlane alm_common_sonarq_ios
-     #   cd sonar-reports    
+        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
+    - uses: actions/upload-artifact@v2.2.4
+      name: Upload coverage file
+      with:
+        name: coverage
+        path: sonar-reports/coverage.xml
+        retention-days: 1
+
+    - uses: actions/upload-artifact@v2.2.4
+      name: Upload swiftlint file
+      with:
+        name: swiftlint
+        path: sonar-reports/swiftlint.txt
+        retention-days: 1
+          
+    - name: Get version
+      shell: bash
+      env:
+        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
+        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+
+      run: |
+        bundle exec fastlane alm_common_version_ios
            
     - name: Set output
       id: setOutputStep
       run: |
-         echo "::set-output name=version::${{env.VERSION}}"    
+         echo "::set-output name=version::${{env.VERSION}}"
+         
+  jobSonar:
+    runs-on: [runner-openshift-oneapp-actions-spain]
+    needs: [unitTest]
+
+    steps:
+
+    - name: Get Token Org Europe
+      id: generateEuropeToken
+      uses: peter-murray/workflow-application-token-action@v1.3.0
+      with:
+        application_id: ${{ secrets.application_id }}
+        application_private_key: ${{ secrets.application_private_key }}
+        organization: santander-group-europe
+
+    - uses: actions/checkout@v3
+      name: Checkout application repository
+      with:
+        repository: ${{ github.repository }}
+        submodules: false
+        ref: develop
+        token: ${{ steps.generateEuropeToken.outputs.token }}
+
+    - name: Load Vars
+      id: loadVars
+      uses: santander-group-europe/alm-github-workflow-configurations@master
+      with:
+        token: ${{ steps.generateEuropeToken.outputs.token }}
+        businessCode: ${{ inputs.businessCode }}
+
+    - uses: actions/download-artifact@v2
+      name: Download coverage artifact
+      with:
+        name: coverage
+        path: sonar-reports
+
+    - uses: actions/download-artifact@v2
+      name: Download swiftlint artifact
+      with:
+        name: swiftlint
+        path: sonar-reports
+
+    - uses: santander-group-europe/alm-sonar-action@master
+      name: run sonar
+      id: runSonar
+      with:
+        projectVersion: ${{ needs.unitTest.outputs.version }}
+        projectKey: ${{ env.SONAR_PROJECT_KEY }}
+        projectName: ${{ github.event.repository.name }}
+        sourcesPath: "./"
+        sonar_url: ${{ env.SONAR_SERVER_URL }}
+        sonar_token: ${{ secrets.sonar_token_dummy_ios }} 
