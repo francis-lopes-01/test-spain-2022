@@ -1,14 +1,14 @@
 name: Dummy Test
 'on':
   workflow_dispatch:
-  workflow_call:
-    secrets:
-      token:
-       required: true
-      application_id:
-       required: true
-      application_private_key:
-       required: true
+  #workflow_call:
+  #  secrets:
+  #    token:
+  #     required: true
+  #    application_id:
+  #     required: true
+  #    application_private_key:
+  #     required: true
 
 # Running Unit test using MAC-OS 12 
 jobs:
@@ -36,17 +36,22 @@ jobs:
     - uses: actions/checkout@v3
       name: Checkout Fastlane
       with:
-        repository: santander-group-europe/alm-fastlane-framework
+        repository: santander-group-europe/alm-fastlane-framework.git
         ref: develop
-        path: main
         token: ${{steps.generateEuropeToken.outputs.token}}
-
+        clean: false
+        path: alm-fastlane-framework
+            
     - name: Installation Fastlane
       shell: bash
+      env:
+        ALM_BUSINESS_CODE: ES
+        ALM_FASTFILE_NAME: iOS
+        ALM_PROJECT_NAME: OneApp
       run: |
-        cp -R main/framework main/setup.rb main/Gemfile_Template .
-        chmod +x setup.rb && ./setup.rb
-        rm -f Gemfile_Template setup.rb
+        pwd
+        ls -l
+        ruby alm-fastlane-framework/setup.rb
           
     - name: Apply xcode version (13.2.1)
       run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app && /usr/bin/xcodebuild -version
@@ -92,47 +97,3 @@ jobs:
       id: setOutputStep
       run: |
          echo "::set-output name=version::${{env.VERSION}}"    
-
-  jobSonar:
-    runs-on: [runner-openshift-oneapp-actions-spain]
-    needs: [unitTest]
-    
-    steps:
-
-      - name: Get Token Org Europe
-        id: generateEuropeToken
-        uses: peter-murray/workflow-application-token-action@v1.3.0
-        with:
-          application_id: ${{ secrets.application_id }}
-          application_private_key: ${{ secrets.application_private_key }}
-          organization: santander-group-europe
-          
-      - uses: actions/checkout@v3
-        name: Checkout application repository
-        with:
-          repository: ${{ github.repository }}
-          submodules: false
-          ref: develop
-          token: ${{ steps.generateEuropeToken.outputs.token }}
-          
-      - uses: actions/download-artifact@v2
-        name: Download coverage artifact
-        with:
-          name: coverage
-          path: sonar-reports
-      
-      - uses: actions/download-artifact@v2
-        name: Download swiftlint artifact
-        with:
-          name: swiftlint
-          path: sonar-reports
-        
-      - uses: santander-group-europe/alm-sonar-action@master
-        name: run sonar
-        id: runSonar
-        with:
-          projectVersion: ${{ needs.unitTests.outputs.version }}
-          projectKey: "SANES:santander-group-europe:SUA:alm-dummy-app-ios"
-          projectName: ${{ github.event.repository.name }}
-          sourcesPath: "./"
-          sonar_token: ${{ secrets.sonar_token_dummy_ios }}        
