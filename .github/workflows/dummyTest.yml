@@ -1,0 +1,102 @@
+name: Dummy Test
+'on':
+  workflow_dispatch:
+
+# Running Unit test using MAC-OS 12 
+jobs:
+  unitTest:
+    runs-on: macos-12
+    steps:
+    
+    - name: Get Token Org Europe
+      id: generateEuropeToken
+      uses: peter-murray/workflow-application-token-action@v1.3.0
+      with:
+        application_id: ${{ secrets.APP_ID_ACTIONS_EUROPE }}
+        application_private_key: ${{ secrets.TOKEN_APP_ACTIONS_EUROPE }}
+        organization: santander-group-europe
+          
+    - name: Checkout dummy repo
+      uses: actions/checkout@v3
+      with:
+        repository: santander-group-europe/alm-dummy-app-ios
+        submodules: false
+        ref: develop
+        token: ${{ steps.generateEuropeToken.outputs.token }}
+        
+    # Fastalane Installation
+    - uses: actions/checkout@v3
+      name: Checkout Fastlane
+      with:
+        repository: santander-group-europe/alm-fastlane-framework.git
+        ref: develop
+        token: ${{steps.generateEuropeToken.outputs.token}}
+        clean: false
+        path: alm-fastlane-framework
+            
+    - name: Installation Fastlane
+      shell: bash
+      env:
+        ALM_BUSINESS_CODE: ES
+        ALM_FASTFILE_NAME: iOS
+        ALM_PROJECT_NAME: OneApp
+      run: |
+        pwd
+        ls -l
+        ruby alm-fastlane-framework/setup.rb
+          
+    - name: Apply xcode version (13.2.1)
+      run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app && /usr/bin/xcodebuild -version
+        
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+
+    - name: Setup machine
+      run: |
+        bundle install
+        
+    - name: build
+      shell: bash
+      env:
+        FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
+        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+        FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
+#        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+        
+        run: |
+          pod install
+#          bundle exec fastlane alm_common_sonarq_ios
+#          cd sonar-reports
+            
+#    - name: Rename coverage file
+#      run: |
+#        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
+#    - uses: actions/upload-artifact@v2.2.4
+#      name: Upload coverage file
+#      with:
+#        name: coverage
+#        path: sonar-reports/coverage.xml
+#        retention-days: 1
+
+#    - uses: actions/upload-artifact@v2.2.4
+#      name: Upload swiftlint file
+#      with:
+#        name: swiftlint
+#        path: sonar-reports/swiftlint.txt
+#        retention-days: 1
+#          
+#    - name: Get version
+#      shell: bash
+#      env:
+#        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
+#        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+
+#      run: |
+ #       bundle exec fastlane alm_common_version_ios
+           
+    - name: Set output
+      id: setOutputStep
+      run: |
+         echo "::set-output name=version::${{env.VERSION}}"
