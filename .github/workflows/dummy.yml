@@ -12,7 +12,7 @@ name: Dummy Test
 
 jobs:
   unitTest:
-    runs-on: macos-y12
+    runs-on: macos-12
     steps:
     
     - name: Get Token Org Europe
