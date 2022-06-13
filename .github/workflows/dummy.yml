@@ -64,41 +64,6 @@ jobs:
     - name: Setup machine
       run: |
         bundle install
-      
-    - name: build
-      shell: bash
-      env:
-        FASTLANE_SCHEME: dummy-iOS
-        FASTLANE_PROJECT: dummy-iOS.xcodeproj
-        FASTLANE_WORKSPACE: dummy-iOS.xcworkspace
-        FASTLANE_SONARQ_OUTPUT_DIR: ./sonar-reports
-
-      run: |
-        pod install
-        bundle exec fastlane alm_common_sonarq_ios
-        cd sonar-reports- name: build
-            
-    - name: Rename coverage file
-      run: |
-        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
-    
-    - uses: actions/upload-artifact@v2.2.4
-      name: Upload coverage file
-      with:
-        name: coverage
-        path: sonar-reports/coverage.xml
-        retention-days: 1
-          
-    - uses: actions/upload-artifact@v2.2.4
-      name: Upload swiftlint file
-      with:
-        name: swiftlint
-        path: sonar-reports/swiftlint.txt
-        retention-days: 1
-
-    - name: Get version
-      run: |
-         bundle exec fastlane getProjectVersion_vostok
            
     - name: Set output
       id: setOutputStep
