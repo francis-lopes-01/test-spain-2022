@@ -44,9 +44,9 @@ jobs:
     - name: Installation Fastlane
       shell: bash
       run: |
-        cp -R main/framework main/setup.sh main/Gemfile_Template .
-        chmod +x setup.sh && ./setup.sh
-        rm -f Gemfile_Template setup.sh
+        cp -R main/framework main/setup.rb main/Gemfile_Template .
+        chmod +x setup.rb && ./setup.rb
+        rm -f Gemfile_Template setup.rb
           
     - name: Apply xcode version (13.2.1)
       run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app && /usr/bin/xcodebuild -version
