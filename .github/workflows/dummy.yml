@@ -64,6 +64,19 @@ jobs:
     - name: Setup machine
       run: |
         bundle install
+        
+    - name: build
+      shell: bash
+      env:
+        FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
+        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+        FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
+        #FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+          
+      run: |
+        pod install
+     #   bundle exec fastlane alm_common_sonarq_ios
+     #   cd sonar-reports    
            
     - name: Set output
       id: setOutputStep
