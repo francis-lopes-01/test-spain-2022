@@ -70,9 +70,9 @@ jobs:
     - name: build
       shell: bash
       env:
-        FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
-        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
-        FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
+        FASTLANE_SCHEME: dummy-iOS
+        FASTLANE_PROJECT: dummy-iOS.xcodeproj
+        FASTLANE_WORKSPACE: dummy-iOS.xcworkspace
 #        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
         
         run: |
