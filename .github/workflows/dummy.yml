@@ -11,8 +11,8 @@ name: Dummy Test
       # required: true
 
 jobs:
-  Checkout_Dummy:
-    runs-on: macos-12
+  unitTest:
+    runs-on: macos-y12
     steps:
     
     - name: Get Token Org Europe
@@ -43,7 +43,7 @@ jobs:
     - name: Installation Fastlane
       shell: bash
       run: |
-        cp -R master/framework master/setup.sh master/Gemfile_Template .
+        cp -R main/framework main/setup.sh main/Gemfile_Template .
         chmod +x setup.sh && ./setup.sh
         rm -f Gemfile_Template setup.sh
           
@@ -94,7 +94,7 @@ jobs:
 
   jobSonar:
     runs-on: [runner-openshift-oneapp-actions-spain]
-    needs: [Checkout_Dummy]
+    needs: [unitTest]
     
     steps:
 
@@ -130,7 +130,7 @@ jobs:
         name: run sonar
         id: runSonar
         with:
-          projectVersion: ${{ needs.jobExecuteUnitTests.outputs.version }}
+          projectVersion: ${{ needs.unitTests.outputs.version }}
           projectKey: "SANES:santander-group-europe:SUA:alm-dummy-app-ios"
           projectName: ${{ github.event.repository.name }}
           sourcesPath: "./"
