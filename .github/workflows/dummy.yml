@@ -43,7 +43,7 @@ jobs:
     - name: Installation Fastlane
       shell: bash
       run: |
-        cp -R main/framework main/setup.sh main/Gemfile_Template .
+        cp -R master/framework master/setup.sh master/Gemfile_Template .
         chmod +x setup.sh && ./setup.sh
         rm -f Gemfile_Template setup.sh
           
