@@ -10,6 +10,7 @@ name: Dummy Test
       application_private_key:
        required: true
 
+# Running Unit test using MAC-OS 12 
 jobs:
   unitTest:
     runs-on: macos-12
@@ -35,7 +36,7 @@ jobs:
     - uses: actions/checkout@v3
       name: Checkout Fastlane
       with:
-        repository: santander-group-europe/oneapp-alm.git
+        repository: santander-group-europe/alm-fastlane-framework
         ref: develop
         path: main
         token: ${{steps.generateEuropeToken.outputs.token}}
