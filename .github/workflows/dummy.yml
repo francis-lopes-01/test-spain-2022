@@ -1,16 +1,16 @@
 name: Dummy Test
 'on':
   workflow_dispatch:
-  workflow_call:
-     secrets:
-      token:
-       required: true
-      application_id:
-       required: true
-      application_private_key:
-       required: true
-      sonar_token_dummy_ios:
-       required: true
+#  workflow_call:
+#     secrets:
+#      token:
+#       required: true
+#      application_id:
+#       required: true
+#      application_private_key:
+#       required: true
+#      sonar_token_dummy_ios:
+#       required: true
 
 # Running Unit test using MAC-OS 12 
 jobs:
