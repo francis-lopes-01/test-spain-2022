@@ -33,6 +33,11 @@ jobs:
         token: ${{steps.generateEuropeToken.outputs.token}}
         clean: false
         path: alm-fastlane-framework
+        
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
             
     - name: Installation Fastlane
       shell: bash
@@ -47,11 +52,6 @@ jobs:
           
     - name: Apply xcode version (13.2.1)
       run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app && /usr/bin/xcodebuild -version
-        
-    - name: Setup ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7.2
 
     - name: Setup machine
       run: |
@@ -63,38 +63,38 @@ jobs:
         FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
         FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
         FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
-#        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
         
       run: |
         pod install
-#          bundle exec fastlane alm_common_sonarq_ios
-#          cd sonar-reports
+          bundle exec fastlane alm_common_sonarq_ios
+          cd sonar-reports
             
-#    - name: Rename coverage file
-#      run: |
-#        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
-#    - uses: actions/upload-artifact@v2.2.4
-#      name: Upload coverage file
-#      with:
-#        name: coverage
-#        path: sonar-reports/coverage.xml
-#        retention-days: 1
+    - name: Rename coverage file
+      run: |
+        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
+    - uses: actions/upload-artifact@v2.2.4
+      name: Upload coverage file
+      with:
+        name: coverage
+        path: sonar-reports/coverage.xml
+        retention-days: 1
 
-#    - uses: actions/upload-artifact@v2.2.4
-#      name: Upload swiftlint file
-#      with:
-#        name: swiftlint
-#        path: sonar-reports/swiftlint.txt
-#        retention-days: 1
-#          
-#    - name: Get version
-#      shell: bash
-#      env:
-#        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
-#        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+    - uses: actions/upload-artifact@v2.2.4
+      name: Upload swiftlint file
+      with:
+        name: swiftlint
+        path: sonar-reports/swiftlint.txt
+        retention-days: 1
+          
+    - name: Get version
+      shell: bash
+      env:
+        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
+        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
 
-#      run: |
- #       bundle exec fastlane alm_common_version_ios
+      run: |
+        bundle exec fastlane alm_common_version_ios
            
     - name: Set output
       id: setOutputStep
