@@ -60,39 +60,23 @@ jobs:
     - name: build
       shell: bash
       env:
-        FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
-        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
-        FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
-        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+        FASTLANE_SCHEME: Pre
+        FASTLANE_PROJECT: Santander.xcodeproj
+        FASTLANE_WORKSPACE: dummy-Santander.xcworkspace
+        FASTLANE_SONARQ_OUTPUT_DIR: ./sonar-reports
         
       run: |
         pod install
         bundle exec fastlane alm_common_sonarq_ios
         cd sonar-reports
-            
-    - name: Rename coverage file
-      run: |
-        mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
-        
-    - name: Upload coverage file
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: coverage
-        path: sonar-reports/coverage.xml
-        retention-days: 1
-
-    - name: Upload swiftlint file
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: swiftlint
-        path: sonar-reports/swiftlint.txt
-        retention-days: 1
+        ls -l   
+    
           
     - name: Get version
       shell: bash
       env:
-        FASTLANE_VERSION_TARGET: ${{ env.IOS_TARGET }}
-        FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
+        FASTLANE_VERSION_TARGET: Santander
+        FASTLANE_PROJECT: Santander.xcodeproj
 
       run: |
         bundle exec fastlane alm_common_version_ios
