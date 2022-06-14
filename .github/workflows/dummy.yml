@@ -63,7 +63,7 @@ jobs:
         FASTLANE_SCHEME: ${{ env.IOS_SCHEME }}
         FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
         FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
-        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
+        FASTLANE_SONARQ_OUTPUT_DIR: ./sonar-reports
         
       run: |
         pod install
