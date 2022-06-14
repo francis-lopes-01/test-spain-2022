@@ -25,8 +25,8 @@ jobs:
         token: ${{ steps.generateEuropeToken.outputs.token }}
         
     # Fastalane Installation
-    - uses: actions/checkout@v3
-      name: Checkout Fastlane
+    - name: Checkout Fastlane
+      uses: actions/checkout@v3
       with:
         repository: santander-group-europe/alm-fastlane-framework.git
         ref: develop
@@ -67,21 +67,22 @@ jobs:
         
       run: |
         pod install
-          bundle exec fastlane alm_common_sonarq_ios
-          cd sonar-reports
+        bundle exec fastlane alm_common_sonarq_ios
+        cd sonar-reports
             
     - name: Rename coverage file
       run: |
         mv sonar-reports/sonarqube-generic-coverage.xml sonar-reports/coverage.xml
-    - uses: actions/upload-artifact@v2.2.4
-      name: Upload coverage file
+        
+    - name: Upload coverage file
+      uses: actions/upload-artifact@v2.2.4
       with:
         name: coverage
         path: sonar-reports/coverage.xml
         retention-days: 1
 
-    - uses: actions/upload-artifact@v2.2.4
-      name: Upload swiftlint file
+    - name: Upload swiftlint file
+      uses: actions/upload-artifact@v2.2.4
       with:
         name: swiftlint
         path: sonar-reports/swiftlint.txt
