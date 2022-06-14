@@ -65,8 +65,8 @@ jobs:
         FASTLANE_WORKSPACE: ${{ env.IOS_WORKSPACE }}
 #        FASTLANE_SONARQ_OUTPUT_DIR: ${{ env.IOS_OUTPUT_DIR }}
         
-        run: |
-          pod install
+      run: |
+        pod install
 #          bundle exec fastlane alm_common_sonarq_ios
 #          cd sonar-reports
             
