@@ -4,36 +4,6 @@ name: Dummy Test
 
 # Running Unit test using MAC-OS 12 
 jobs:
-  jobConfigurations:
-    runs-on: ubuntu-latest
-    outputs:
-      macOSVersion: ${{ env.MACOS_RUNNER_VERSION }}
-    steps:
-      
-      - name: Get Token Org Europe
-        id: generateEuropeToken
-        uses: peter-murray/workflow-application-token-action@v1.3.0
-        with:
-          application_id: ${{ secrets.application_id }}
-          application_private_key: ${{ secrets.application_private_key }}
-          organization: santander-group-europe
-     
-      - name: Get project environment parameters
-        id: loadVars
-        uses: santander-group-europe/alm-github-workflow-configurations@master
-        with:
-          token: ${{ steps.generateEuropeToken.outputs.token }}
-          businessCode: ${{ inputs.businessCode }}
-
-      - name: Input prints
-        run: |
-              echo "targetBranch: ${{github.event.inputs.targetBranch}}"
-              echo "branchOrigin: ${{github.event.inputs.branchOrigin}}"
-              echo "businessCode: ${{github.event.inputs.businessCode}}"
-              echo "Xcode: ${{env.XCODE_VERSION}}"
-              echo "MacOS: ${{env.MACOS_RUNNER_VERSION}}"
-
-
   unitTest:
     runs-on: macos-12
     steps:
@@ -97,7 +67,7 @@ jobs:
         
       run: |
         pod install
-        bundle exec fastlane sonarQ_vostok
+        bundle exec fastlane alm_common_sonarq_ios
         cd sonar-reports
             
     - name: Rename coverage file
@@ -125,7 +95,7 @@ jobs:
         FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
 
       run: |
-        bundle exec fastlane getProjectVersion_vostok
+        bundle exec fastlane alm_common_version_ios
            
     - name: Set output
       id: setOutputStep
