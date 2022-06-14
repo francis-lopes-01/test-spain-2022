@@ -67,8 +67,8 @@ jobs:
         
       run: |
         pod install
-#        bundle exec fastlane alm_common_sonarq_ios
-#        cd sonar-reports
+        bundle exec fastlane sonarQ_vostok
+        cd sonar-reports
             
     - name: Rename coverage file
       run: |
@@ -95,7 +95,7 @@ jobs:
         FASTLANE_PROJECT: ${{ env.IOS_PROJ }}
 
       run: |
-        bundle exec fastlane alm_common_version_ios
+        bundle exec fastlane getProjectVersion_vostok
            
     - name: Set output
       id: setOutputStep
