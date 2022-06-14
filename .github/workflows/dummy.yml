@@ -1,31 +1,6 @@
 name: Dummy Test
 'on':
   workflow_dispatch:
-  
-  # This workflow is called by the template
-  workflow_call:
-    inputs:
-      targetBranch:
-       type: string
-       required: true
-       description: ALM Fastlane target branch
-      businessCode:
-       type: string
-       required: true
-       description: ALM Business code
-      branchOrigin:
-       type: string
-       required: true
-       description: App repo origin workflow branch
-    secrets:
-      token:
-       required: true
-      application_id:
-       required: true
-      application_private_key:
-       required: true
-      sonar_token_dummy_ios:
-       required: true
 
 # Running Unit test using MAC-OS 12 
 jobs:
