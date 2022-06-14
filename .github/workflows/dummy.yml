@@ -60,9 +60,9 @@ jobs:
     - name: build
       shell: bash
       env:
-        FASTLANE_SCHEME: Pre
-        FASTLANE_PROJECT: Santander.xcodeproj
-        FASTLANE_WORKSPACE: dummy-Santander.xcworkspace
+        FASTLANE_SCHEME: dummy-iOS
+        FASTLANE_PROJECT: dummy-iOS.xcodeproj
+        FASTLANE_WORKSPACE: dummy-iOS.xcworkspace
         FASTLANE_SONARQ_OUTPUT_DIR: ./sonar-reports
         
       run: |
@@ -75,8 +75,8 @@ jobs:
     - name: Get version
       shell: bash
       env:
-        FASTLANE_VERSION_TARGET: Santander
-        FASTLANE_PROJECT: Santander.xcodeproj
+        FASTLANE_VERSION_TARGET: dummy-iOS
+        FASTLANE_PROJECT: dummy-iOS.xcodeproj
 
       run: |
         bundle exec fastlane alm_common_version_ios
