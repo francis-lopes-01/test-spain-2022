@@ -1,10 +1,10 @@
-name: Universe vs World Test
+name: universe-vs-world-workflow
 'on':
   workflow_dispatch:
     inputs:
       hello:
         required: true
-        description: Choose W for Hello world and U Hello universe
+        description: Choose W for Hello world and U for Hello universe
         type: choice
         options:
           - W
