@@ -1,0 +1,26 @@
+name: universe-vs-world-workflow
+'on':
+  workflow_dispatch:
+    inputs:
+      hello:
+        required: true
+        description: Choose 1 for "Fernando de Noronha" or 2 for "Porto de Galinhas"
+        type: choice
+        options:
+          - 1
+          - 2
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Output using "echo"
+      id: checkinputs
+      run: "echo Se ha seleccionado '${{github.events.inputs.html-test}}'"
+      
+    - name: Running the files 
+      uses: santander-group-europe/test-spain-2022-html-action@master       
+      id: actiontest
+      with:
+        hello: "${{github.events.inputs.html-test}}"
+        tokenPAT: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
