@@ -1,5 +1,5 @@
 #Java app for testing
-name: GitHub Actions Test
+name: hello-world-workflow
 on:
   workflow_dispatch :
 jobs:
