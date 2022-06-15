@@ -1,4 +1,4 @@
-name: universe-vs-world-workflow
+name: landscapes-workflow
 'on':
   workflow_dispatch:
     inputs:
