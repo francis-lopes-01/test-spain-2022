@@ -14,17 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-   # - name: Checkout private tools
-    #  uses: actions/checkout@v3
-     # with:
-      # token: ${{secrets.PAT}} # `GH_PAT` is a secret that contains your PAT
-    
     - name: Action Test check input
       id: checkinputs
       run: "echo Se ha seleccionado '${{github.events.inputs.hello}}'"
       
-    - uses: santander-group-europe/test-spain-2022-action@master
-      name: Action Test        
+    - name: Action Test 
+      uses: santander-group-europe/test-spain-2022-action@master       
       id: actiontest
       with:
         hello: "${{github.events.inputs.hello}}"
