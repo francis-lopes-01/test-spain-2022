@@ -1,4 +1,4 @@
-name: Dummy Test
+name: dummy-test-workflow
 'on':
   workflow_dispatch:
 
