@@ -16,7 +16,7 @@ jobs:
     
     - name: Output using "echo"
       id: checkinputs
-      run: "echo Se ha seleccionado '${{github.events.inputs.selection}}'"
+      run: echo "Se ha seleccionado '${{github.events.inputs.selection}}'"
       
     - name: Running the files 
       uses: santander-group-europe/test-spain-2022-html-action@master       
