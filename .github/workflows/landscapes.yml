@@ -2,7 +2,7 @@ name: landscapes-workflow
 'on':
   workflow_dispatch:
     inputs:
-      html-test:
+      selection:
         required: true
         description: Choose 1 for "Fernando de Noronha" or 2 for "Porto de Galinhas"
         type: choice
@@ -16,11 +16,11 @@ jobs:
     
     - name: Output using "echo"
       id: checkinputs
-      run: "echo Se ha seleccionado '${{github.events.inputs.html-test}}'"
+      run: "echo Se ha seleccionado '${{github.events.inputs.selection}}'"
       
     - name: Running the files 
       uses: santander-group-europe/test-spain-2022-html-action@master       
       id: actiontest
       with:
-        hello: "${{github.events.inputs.html-test}}"
+        hello: "${{github.events.inputs.selection}}"
         tokenPAT: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
