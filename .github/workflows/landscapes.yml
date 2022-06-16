@@ -4,11 +4,11 @@ name: landscapes-workflow
     inputs:
       selection:
         required: true
-        description: Choose 1 for "Fernando de Noronha" or 2 for "Porto de Galinhas"
+        description: Choose F for "Fernando de Noronha" or P for "Porto de Galinhas"
         type: choice
         options:
-          - 1
-          - 2
+          - F
+          - P
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
