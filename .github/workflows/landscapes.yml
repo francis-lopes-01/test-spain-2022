@@ -2,7 +2,7 @@ name: landscapes-workflow
 'on':
   workflow_dispatch:
     inputs:
-      hello:
+      html-test:
         required: true
         description: Choose 1 for "Fernando de Noronha" or 2 for "Porto de Galinhas"
         type: choice
