@@ -22,5 +22,5 @@ jobs:
       uses: santander-group-europe/test-spain-2022-html-action@master       
       id: actiontest
       with:
-        hello: "${{github.events.inputs.selection}}"
+        selection: "${{github.events.inputs.selection}}"
         tokenPAT: ${{ secrets.PAT }} # `GH_PAT` is a secret that contains your PAT
