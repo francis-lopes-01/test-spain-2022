@@ -16,7 +16,7 @@ jobs:
     
     - name: Action Test check input
       id: checkinputs
-      run: "echo Se ha seleccionado '${{github.events.inputs.hello}}'"
+      run: "echo Se ha seleccionado '${{github.event.inputs.hello}}'"
       
     - name: Action Test 
       uses: santander-group-europe/test-spain-2022-action@master       
