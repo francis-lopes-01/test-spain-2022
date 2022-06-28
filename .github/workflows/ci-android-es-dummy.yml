@@ -1,0 +1,24 @@
+name: ci-android-runners-efimeros
+
+on:
+
+  # This workflow is called by the template
+  workflow_call:
+    inputs:
+      branchOrigin:
+        type: string
+        required: true
+        description: App repo origin workflow branch
+      businessCode:
+        type: string
+        required: true
+        description: ALM Business code
+    secrets:
+      application_id:
+       required: true
+      application_private_key:
+       required: true
+      application_sonar_token:
+        required: true
+      oc_token:
+        required: true
