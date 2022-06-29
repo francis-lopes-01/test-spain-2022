@@ -1,8 +1,9 @@
 name: ci-android-runners-efimeros
 
-on:
+'on':
 
   # This workflow is called by the template
+  workflow_dispatch:
   workflow_call:
     inputs:
       branchOrigin:
@@ -22,3 +23,110 @@ on:
         required: true
       oc_token:
         required: true
+        
+jobs:
+  jobExecuteUnitTests:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{steps.setOutputStep.outputs.version}}
+    steps:
+      # Get organization token
+      - name: Get Token Org Europe
+        id: generateEuropeToken
+        uses: peter-murray/workflow-application-token-action@v1.3.0
+        with:
+          application_id: ${{ secrets.application_id }}
+          application_private_key: ${{ secrets.application_private_key }}
+          organization: santander-group-europe
+
+      # Load environment variables from configuration repository
+      - name: Get project environment variables
+        id: loadVars
+        uses: santander-group-europe/alm-github-workflow-configurations@v1
+        with:
+          token: ${{ steps.generateEuropeToken.outputs.token }}
+          businessCode: ${{ inputs.businessCode }}
+
+      # Show inputs parameters
+      - name: Input prints
+        run: |
+              echo "branchOrigin: ${{github.event.inputs.branchOrigin}}"
+              echo "businessCode: ${{github.event.inputs.businessCode}}"
+      
+      # Checkout application source code (dummy)    
+      - name: Checkout dummy repository
+        uses: actions/checkout@v3
+        with:
+          repository: santander-group-europe/alm-dummy-app-ios
+          submodules: false
+          ref: develop
+          token: ${{ steps.generateEuropeToken.outputs.token }}
+     
+       # Checkout fastlane framework repository
+      - uses: actions/checkout@v3
+        name: Checkout Fastlane
+        with:
+          repository: santander-group-europe/alm-fastlane-framework.git
+          ref: master
+          token: ${{steps.generateEuropeToken.outputs.token}}
+          clean: false
+          path: alm-fastlane-framework
+
+      # Install Java
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # Install ruby
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+      
+      # Install Fastlane Framework
+      - name: Installation Fastlane
+        shell: bash
+        env: 
+          ALM_BUSINESS_CODE: ${{ env.BUSINESS_CODE }}
+          ALM_FASTFILE_NAME: ${{ env.BUSINESS_FASTFILE_NAME }}
+          ALM_PROJECT_NAME: ${{ env.BUSINESS_PROJECT_NAME }}
+        run: |
+          ruby alm-fastlane-framework/setup.rb
+      
+      # Fastalane framework setup
+      - name: Setup Fastlane
+        run: bundle install
+      
+      # Application compilation
+      - name: Ktfmt check
+        run: bundle exec fastlane ktfmt_check
+
+      # Run unit test & create report for static analysis
+      - name: Coverage Report
+        run: ./gradlew JacocoLocalReport
+      
+      # Rename Jacoco Report
+      - name: Rename jacoco report
+        id: renameJacocoReport
+        run: |
+          mv ./build/reports/jacoco/jacocoLocalReport/jacocoLocalReport.xml ./build/reports/jacoco/jacocoLocalReport/jacocoReport.xml
+          
+      # Upload Jacoco Report (jacocoReport.xml)   
+      - uses: actions/upload-artifact@v2.2.4
+        name: Upload Jacoco Report
+        with:
+          name: jacoco-report
+          path: ./build/reports/jacoco/jacocoLocalReport/jacocoReport.xml
+          retention-days: 1
+
+      # Get application version
+      - name: Get version
+        run: |
+           bundle version
+           
+      - name: Set output
+        id: setOutputStep
+        run: |
+           echo "::set-output name=version::${{env.VERSION}}"
