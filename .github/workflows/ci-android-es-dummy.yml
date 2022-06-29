@@ -108,8 +108,8 @@ jobs:
       run: bundle install
       
     # Application compilation
-    - name: Ktfmt check
-      run: bundle exec fastlane ktfmt_check
+ #   - name: Ktfmt check
+  #    run: bundle exec fastlane ktfmt_check
 
     # Run unit test & create report for static analysis
     - name: Coverage Report
