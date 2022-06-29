@@ -72,13 +72,13 @@ jobs:
      
     # Checkout fastlane framework repository
     - uses: actions/checkout@v3
-        name: Checkout Fastlane
-        with:
-          repository: santander-group-europe/alm-fastlane-framework.git
-          ref: master
-          token: ${{steps.generateEuropeToken.outputs.token}}
-          clean: false
-          path: alm-fastlane-framework
+      name: Checkout Fastlane
+      with:
+        repository: santander-group-europe/alm-fastlane-framework.git
+        ref: master
+        token: ${{steps.generateEuropeToken.outputs.token}}
+        clean: false
+        path: alm-fastlane-framework
 
     # Install Java
     - name: set up JDK 11
