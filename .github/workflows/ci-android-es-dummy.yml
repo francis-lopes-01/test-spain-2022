@@ -31,29 +31,29 @@ jobs:
       version: ${{steps.setOutputStep.outputs.version}}
     steps:
       # Get organization token
-#      - name: Get Token Org Europe
-#        id: generateEuropeToken
-#        uses: peter-murray/workflow-application-token-action@v1.3.0
-#        with:
-#          application_id: ${{ secrets.application_id }}
-#          application_private_key: ${{ secrets.application_private_key }}
-#          organization: santander-group-europe
+      - name: Get Token Org Europe
+        id: generateEuropeToken
+        uses: peter-murray/workflow-application-token-action@v1.3.0
+        with:
+          application_id: ${{ secrets.application_id }}
+          application_private_key: ${{ secrets.application_private_key }}
+          organization: santander-group-europe
           
-    - name: Get Token Org Europe
-      id: generateEuropeToken
-      uses: peter-murray/workflow-application-token-action@v1.3.0
-      with:
-        application_id: ${{ secrets.APP_ID_ACTIONS_EUROPE }}
-        application_private_key: ${{ secrets.TOKEN_APP_ACTIONS_EUROPE }}
-        organization: santander-group-europe
+#    - name: Get Token Org Europe
+#      id: generateEuropeToken
+#      uses: peter-murray/workflow-application-token-action@v1.3.0
+#      with:
+#        application_id: ${{ secrets.APP_ID_ACTIONS_EUROPE }}
+#        application_private_key: ${{ secrets.TOKEN_APP_ACTIONS_EUROPE }}
+#        organization: santander-group-europe
           
       # Load environment variables from configuration repository
-#      - name: Get project environment variables
-#        id: loadVars
-#        uses: santander-group-europe/alm-github-workflow-configurations@v1
-#        with:
-#          token: ${{ steps.generateEuropeToken.outputs.token }}
-#          businessCode: ${{ inputs.businessCode }}
+      - name: Get project environment variables
+        id: loadVars
+        uses: santander-group-europe/alm-github-workflow-configurations@v1
+        with:
+          token: ${{ steps.generateEuropeToken.outputs.token }}
+          businessCode: ${{ inputs.businessCode }}
 
     # Show inputs parameters
     - name: Input prints
